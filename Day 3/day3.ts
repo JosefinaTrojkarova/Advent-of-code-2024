@@ -1,14 +1,4 @@
-import {promises as fs} from 'fs';
-import {join} from 'path';
-
-async function readTextFile(filePath: string): Promise<string> {
-    try {
-        return await fs.readFile(filePath, 'utf-8');
-    } catch (error) {
-        console.error('Error reading file:', error);
-        throw error;
-    }
-}
+import {readTextFile} from "../utils";
 
 function findAllValidMul(input: string) {
     const regex = /\bmul\((\d+),*(\d+)\)/g;
@@ -45,16 +35,14 @@ function multiplyValidMuls (validMuls: string[][]): number {
 }
 
 async function calculateAllOperations() {
-    const fileLocation = join(__dirname, 'input.txt')
-    const fileContent = await readTextFile(fileLocation);
+    const fileContent = await readTextFile(__dirname, 'input.txt');
     const operations = findAllValidMul(fileContent);
     const sum = multiplyValidMuls(operations);
     console.log(`Sum of all valid muls:\n${sum}`);
 }
 
 async function calculateAllOperationsWithConditions() {
-    const fileLocation = join(__dirname, 'input.txt')
-    const fileContent = await readTextFile(fileLocation);
+    const fileContent = await readTextFile(__dirname, 'input.txt');
     const operations = findValidMulWithConditions(fileContent);
     const sum = multiplyValidMuls(operations);
     console.log(`Sum of all valid muls with conditions:\n${sum}`);

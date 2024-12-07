@@ -1,15 +1,5 @@
 /// <reference lib="es2015" />
-import {promises as fs} from 'fs';
-import { join } from 'path';
-
-async function readTextFile(filePath: string): Promise<string> {
-    try {
-        return await fs.readFile(filePath, 'utf-8');
-    } catch (error) {
-        console.error('Error reading file:', error);
-        throw error;
-    }
-}
+import {readTextFile} from "../utils";
 
 function splitStringToArrays(input: string): [number[], number[]] {
     return input.trim().split('\n').reduce<[number[], number[]]>(
@@ -44,8 +34,7 @@ function addNumbersInArray(arr: number[]): number {
 }
 
 async function calculateDifference() {
-    const fileLocation = join(__dirname, 'input.txt')
-    const fileContent = await readTextFile(fileLocation);
+    const fileContent = await readTextFile(__dirname, 'input.txt');
     const arrays = splitStringToArrays(fileContent);
     const orderedArrays = orderArrays(arrays[0], arrays[1]);
     const differences = createArrayFromDifferences(orderedArrays[0], orderedArrays[1]);
@@ -67,8 +56,7 @@ function findSimilarityScore(arr1: number[], arr2: number[]): number {
 }
 
 async function calculateSimilarityScore() {
-    const fileLocation = join(__dirname, 'input.txt')
-    const fileContent = await readTextFile(fileLocation);
+    const fileContent = await readTextFile(__dirname, 'input.txt');
     const arrays = splitStringToArrays(fileContent);
     const similarityScore = findSimilarityScore(arrays[0], arrays[1]);
     console.log(`Similarity score:\n${similarityScore}`);

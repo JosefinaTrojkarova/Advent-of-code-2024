@@ -1,14 +1,4 @@
-import {promises as fs} from 'fs';
-import {join} from 'path';
-
-async function readTextFile(filePath: string): Promise<string> {
-    try {
-        return await fs.readFile(filePath, 'utf-8');
-    } catch (error) {
-        console.error('Error reading file:', error);
-        throw error;
-    }
-}
+import {readTextFile} from "../utils";
 
 function splitStringToArrays(input: string): number[][] {
     return input.trim().split('\n').map(line => line.trim().split(/\s+/).map(Number));
@@ -37,16 +27,14 @@ function validateReportWithDampener(report: number[]): boolean {
 }
 
 async function countSafeReports() {
-    const fileLocation = join(__dirname, 'input.txt')
-    const fileContent = await readTextFile(fileLocation);
+    const fileContent = await readTextFile(__dirname, 'input.txt');
     const lines = splitStringToArrays(fileContent);
     const amountOfSafeReports = lines.filter(validateReport).length;
     console.log(`Amount of safe reports:\n${amountOfSafeReports}`);
 }
 
 async function countSafeReportsWithDampener() {
-    const fileLocation = join(__dirname, 'input.txt')
-    const fileContent = await readTextFile(fileLocation);
+    const fileContent = await readTextFile(__dirname, 'input.txt');
     const lines = splitStringToArrays(fileContent);
     const amountOfSafeReports = lines.filter(validateReportWithDampener).length;
     console.log(`Amount of safe reports with dampener:\n${amountOfSafeReports}`);

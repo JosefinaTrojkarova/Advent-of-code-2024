@@ -1,14 +1,4 @@
-import {promises as fs} from 'fs';
-import {join} from 'path';
-
-async function readTextFile(filePath: string): Promise<string> {
-    try {
-        return await fs.readFile(filePath, 'utf-8');
-    } catch (error) {
-        console.error('Error reading file:', error);
-        throw error;
-    }
-}
+import {readTextFile} from "../utils";
 
 function findAllXMAS(input: string): number {
     const grid = input.replace(/\r/g, '').split('\n').map(line => line.split(''));
@@ -95,8 +85,7 @@ function findAllX_MAS(input: string) {
 
 
 async function findAndCalculateAllXMAS() {
-    const fileLocation = join(__dirname, 'input.txt')
-    const fileContent = await readTextFile(fileLocation);
+    const fileContent = await readTextFile(__dirname, 'input.txt');
     const totalXMAS = findAllXMAS(fileContent);
     console.log('Total XMAS:', totalXMAS);
     const totalX_MAS = findAllX_MAS(fileContent);

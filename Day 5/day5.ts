@@ -1,14 +1,4 @@
-import {promises as fs} from 'fs';
-import {join} from 'path';
-
-async function readTextFile(filePath: string): Promise<string> {
-    try {
-        return await fs.readFile(filePath, 'utf-8');
-    } catch (error) {
-        console.error('Error reading file:', error);
-        throw error;
-    }
-}
+import {readTextFile} from "../utils";
 
 function rulesToArray(rules: string): number[][] {
     return rules.replace(/\r/g, '').split('\n').map(line => line.split('|').map(Number));
@@ -90,8 +80,8 @@ function addUpValidUpdates(rules: number[][], updates: number[][]): number {
 }
 
 async function main() {
-    const rules = await readTextFile(join(__dirname, 'rules.txt'));
-    const updates = await readTextFile(join(__dirname, 'updates.txt'));
+    const rules = await readTextFile(__dirname, 'rules.txt');
+    const updates = await readTextFile(__dirname, 'updates.txt');
     const rulesArray = rulesToArray(rules);
     const updatesArray = updatesToArrays(updates);
     console.log('Valid total: ' + addUpValidUpdates(rulesArray, updatesArray));
